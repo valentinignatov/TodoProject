@@ -16,4 +16,6 @@ public interface TodoRepository {
     List<Todo> findByUserId(Long id);
 
     List<Todo> findByTagId(Long userId, Long tagId);
+
+    List<Todo> findByIntroducedText(String text);
 }

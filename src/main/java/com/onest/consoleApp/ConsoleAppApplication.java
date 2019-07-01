@@ -53,6 +53,7 @@ public class ConsoleAppApplication {
             r.clearScreen();
             switch (choice) {
                 case 1:
+                    System.out.println("");
                     System.out.println("Introduce Username");
                     String username = ob.readLine();
                     User user = new User(username);
@@ -60,13 +61,17 @@ public class ConsoleAppApplication {
                     Optional<User> existUser = userService.findByUsername(username);
 
                     if(existUser.isPresent()){
+                        System.out.println("");
                         System.out.println("Username allready exists");
                     } else {
+                        System.out.println("");
+                        System.out.println("New user saved");
                         userService.save(user);
                     }
                     break;
 
                 case 2:
+                    System.out.println("");
                     System.out.println("Introduce Username");
                     String usernameToCheck = ob.readLine();
 
@@ -75,6 +80,7 @@ public class ConsoleAppApplication {
                     if (foundUser.isPresent()) {
 
                         // 1. print user logged successfuly
+                        System.out.println("");
                         System.out.println("Logged succesyfuly");
 
                         // 2. set logged user
@@ -84,6 +90,7 @@ public class ConsoleAppApplication {
                         menuLoged(loggedUser);
 
                     } else {
+                        System.out.println("");
                         System.out.println("This username does not exist");
                     }
                     break;
@@ -93,11 +100,13 @@ public class ConsoleAppApplication {
                     break;
 
                 default:
+                    System.out.println("");
                     System.out.println("This is not a choice");
             }
 //			for(int i = 0; i<50; i++){
 //				System.out.println();
 //			}
+            System.out.println("");
             System.out.println("Would you like to quit y/n");
             input = in.next().toLowerCase();
             quit = input.charAt(0);
@@ -124,19 +133,21 @@ public class ConsoleAppApplication {
             System.out.println("\t1. See all your todos");
             System.out.println("\t2. Add todo");
             System.out.println("\t3. Find by tags");
+            System.out.println("\t4. Search todo by text");
 
             choice = in.nextInt();
 
             switch (choice) {
                 case 1:
+                    System.out.println("");
                     todoService.findAllByUsername(user.getUsername()).forEach(todo -> {
-                        System.out.println(todo.toString());
+                        System.out.println(todo.getId()+"\t|"+todo.getText()+"\t|"+todo.getTags());
 
                     });
                     break;
 
                 case 2:
-
+                    System.out.println("");
                     System.out.println("Introduce Todo");
                     String todoToBeSaved = ob.readLine();
 
@@ -144,7 +155,7 @@ public class ConsoleAppApplication {
                     Optional<Todo> foundTodo = todoService.findByName(todoToBeSaved);
 
                     if (foundTodo.isPresent()) {
-
+                        System.out.println("");
                         System.out.println("Todo already exist");
 
                     } else {
@@ -168,7 +179,7 @@ public class ConsoleAppApplication {
                         });
 
                         tagList = tagService.findAll();
-
+                        System.out.println("");
                         System.out.println("Chose a tag of importance for introduced todo: \n ");
                         tagList.forEach(tag -> {
                             System.out.println("tag id:"+tag.getId()+" tag name:"+tag.getName());
@@ -176,31 +187,43 @@ public class ConsoleAppApplication {
 
                         int tagId = in.nextInt();
                         tagService.addTagByTodoId(todo.getId(),tagId);
-
+                        System.out.println("");
                         System.out.println("Todo was saved");
 
                     }
                     break;
 
                 case 3:
-                    //System.out.println("Enter your tag name:");
-
                     tagList = tagService.findAll();
-
+                    System.out.println("");
                     System.out.println("Chose a tag to find by: \n ");
                     tagList.forEach(tag -> {
-                        System.out.println("tag id:"+tag.getId()+" tag name:"+tag.getName());
+                        System.out.println("tag id: "+tag.getId()+" tag name: "+tag.getName());
                     });
+
                     Long tagId = in.nextLong();
 
-                    todoService.findByTagId(user.getId(),tagId).forEach(todo -> {
+                    todoService.findByTagId(user.getId(), tagId).forEach(todo -> {
                         System.out.println(todo.getText());
                     });
 
                     break;
 
+                case 4:
+                    // search by text
+                    System.out.println("");
+                    System.out.println("Introduce text");
+                    String textToFindTodo = ob.readLine();
+
+                    System.out.println("");
+                    todoService.findByIntroducedText(textToFindTodo).forEach(todo -> {
+                        System.out.println("Found todo: "+todo.getText());
+                    });
+
+                    break;
                 default:
             }
+            System.out.println("");
             System.out.println("Would you like to quit to main menu y/n");
             input = in.next().toLowerCase();
             quit = input.charAt(0);

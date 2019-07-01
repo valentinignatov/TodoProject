@@ -19,4 +19,6 @@ public interface TodoService {
     List<TodoDetailed> findAllByUsername(String username);
 
     List<Todo> findByTagId(Long userId, Long tagId);
+
+    List<Todo> findByIntroducedText(String text);
 }

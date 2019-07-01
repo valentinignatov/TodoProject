@@ -37,10 +37,6 @@ public class TagRepositoryImpl implements TagRepository {
 
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-//            String sql = "select tag_name from tags, todos_to_tags " +
-//                    "where todos_to_tags.tag_id = tags.id and todo_id = '"+todoId+"';";
-
-
             stmt.setInt(1,todoId.intValue());
 
             ResultSet rs = stmt.executeQuery();
@@ -58,8 +54,6 @@ public class TagRepositoryImpl implements TagRepository {
         }
 
         return temp;
-
-       // return Collections.emptyList();
     }
 
     @Override

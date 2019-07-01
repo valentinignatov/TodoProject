@@ -54,8 +54,12 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public List<Todo> findByTagId(Long userId, Long tagId) {
-
         return todoRepository.findByTagId(userId, tagId);
+    }
+
+    @Override
+    public List<Todo> findByIntroducedText(String text) {
+        return todoRepository.findByIntroducedText(text);
     }
 
 }

@@ -152,16 +152,42 @@ public class TodoRepositoryImpl implements TodoRepository {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
+
                 Todo todo = new Todo();
-
                 todo.setText(rs.getString("text"));
-
                 temp.add(todo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        return temp;
+    }
+
+    @Override
+    public List<Todo> findByIntroducedText(String text) {
+
+        ArrayList<Todo> temp = new ArrayList<>();
+
+        String sql = "select text from todos where text like ?;";
+
+        try {
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, "%" + text + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+
+                Todo todo = new Todo();
+                todo.setText(rs.getString("text"));
+                temp.add(todo);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return temp;
     }
 
