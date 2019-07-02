@@ -62,4 +62,14 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.findByIntroducedText(text);
     }
 
+    @Override
+    public Todo findByTodoId(Long id) {
+        return todoRepository.findByTodoId(id);
+    }
+
+    @Override
+    public Todo alterTodoById(String newTodo, Long id) {
+        return todoRepository.alterTodoById(newTodo, id);
+    }
+
 }

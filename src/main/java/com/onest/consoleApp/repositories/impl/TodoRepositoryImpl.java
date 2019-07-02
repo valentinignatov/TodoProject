@@ -191,4 +191,45 @@ public class TodoRepositoryImpl implements TodoRepository {
         return temp;
     }
 
+    @Override
+    public Todo findByTodoId(Long id) {
+        Todo todo = new Todo();
+
+        String sql = "select text from todos where id = ?";
+
+        try {
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setLong(1,id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                todo.setText(rs.getString("text"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return todo;
+    }
+
+    @Override
+    public Todo alterTodoById(String newTodo, Long id) {
+        String sql = "update todos set text = ? where id = ?;";
+
+        try {
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, newTodo);
+            stmt.setLong(2, id);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

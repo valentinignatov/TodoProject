@@ -21,4 +21,8 @@ public interface TodoService {
     List<Todo> findByTagId(Long userId, Long tagId);
 
     List<Todo> findByIntroducedText(String text);
+
+    Todo findByTodoId(Long id);
+
+    Todo alterTodoById(String newTodo, Long id);
 }

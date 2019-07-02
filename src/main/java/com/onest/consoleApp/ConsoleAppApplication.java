@@ -134,6 +134,7 @@ public class ConsoleAppApplication {
             System.out.println("\t2. Add todo");
             System.out.println("\t3. Find by tags");
             System.out.println("\t4. Search todo by text");
+            System.out.println("\t5. Update todo");
 
             choice = in.nextInt();
 
@@ -205,6 +206,7 @@ public class ConsoleAppApplication {
 
                     todoService.findByTagId(user.getId(), tagId).forEach(todo -> {
                         System.out.println(todo.getText());
+                        System.out.println("hash code of todo.getText(): "+todo.getText().hashCode());
                     });
 
                     break;
@@ -221,6 +223,35 @@ public class ConsoleAppApplication {
                     });
 
                     break;
+
+                case 5:
+                    System.out.println("");
+                    System.out.println("What todo you want yo update:");
+                    todoService.findAllByUsername(user.getUsername()).forEach(todo -> {
+                        System.out.println(todo.getId()+"\t|"+todo.getText());
+
+                    });
+
+                    Long todoId = in.nextLong();
+
+                    Todo todo = new Todo();
+
+                    todo = todoService.findByTodoId(todoId);
+
+                    System.out.println("");
+                    System.out.println("Set up a new todo");
+                    String updateTodo = ob.readLine();
+
+                    System.out.println("Old todo : " + todo.getText());
+
+                    todoService.alterTodoById(updateTodo, todoId);
+
+                    todo = todoService.findByTodoId(todoId);
+
+                    System.out.println("New todo : " + todo.getText());
+
+                    break;
+
                 default:
             }
             System.out.println("");
