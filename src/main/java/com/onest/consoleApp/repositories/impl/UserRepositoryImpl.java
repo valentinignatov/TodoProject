@@ -1,11 +1,11 @@
 package com.onest.consoleApp.repositories.impl;
 
 import com.onest.consoleApp.models.User;
+import com.onest.consoleApp.models.UserWithNrOfTodos;
 import com.onest.consoleApp.repositories.UserRepository;
-import com.onest.consoleApp.services.FileReaderService;
-import com.onest.consoleApp.services.impl.FileReaderServiceImpl;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class UserRepositoryImpl implements UserRepository {
@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         try {
 
-            String sql = "select id, user_name from users where user_name = ?";
+            String sql = "select id, user_name from users where user_name = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
@@ -67,5 +67,39 @@ public class UserRepositoryImpl implements UserRepository {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    @Override
+    public ArrayList<User> findAll() {
+
+        String sql = "select id, user_name from users;";
+
+        ArrayList<User> temp = new ArrayList<>();
+
+        try {
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                User user =  new User();
+                user.setId(rs.getLong("id"));
+                user.setUsername(rs.getString("user_name"));
+                temp.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    @Override
+    public UserWithNrOfTodos showNrOfTodosForUser() {
+
+        UserWithNrOfTodos user = new UserWithNrOfTodos();
+
+        String sql = "";
+        return null;
     }
 }

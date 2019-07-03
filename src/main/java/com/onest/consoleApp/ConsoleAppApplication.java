@@ -43,11 +43,14 @@ public class ConsoleAppApplication {
 
         User loggedUser;
 
+        TodoService todoService = new TodoServiceImpl();
+
         while (quit != 'y') {
             r.println("\t ---MENU---");
             r.println("\t 1. Register");
             r.println("\t 2. Login");
-            r.println("\t 3. Exit");
+            r.println("\t 3. Show users and number of todos");
+            r.println("\t 4. Exit");
             r.flush();
             choice = in.nextInt();
             r.clearScreen();
@@ -96,6 +99,14 @@ public class ConsoleAppApplication {
                     break;
 
                 case 3:
+                    userService.findAll().forEach(user1 -> {
+                        //System.out.println(user1.getUsername());
+                        System.out.println(user1.getUsername().toUpperCase()+" has "+todoService.numberOfTodos(user1.getId())+" todos");
+                    });
+
+                    break;
+
+                case 4:
                     System.exit(0);
                     break;
 

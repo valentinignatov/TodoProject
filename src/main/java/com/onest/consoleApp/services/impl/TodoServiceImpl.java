@@ -72,4 +72,9 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.alterTodoById(newTodo, id);
     }
 
+    @Override
+    public Long numberOfTodos(Long userId) {
+        return todoRepository.numberOfTodos(userId);
+    }
+
 }

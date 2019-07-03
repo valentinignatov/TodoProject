@@ -232,4 +232,33 @@ public class TodoRepositoryImpl implements TodoRepository {
         return null;
     }
 
+    @Override
+    public Long numberOfTodos(Long userId) {
+
+        String sql = "SELECT COUNT (text) FROM todos where user_id = ?;";
+
+        Long nr = null;
+
+        try {
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setLong(1, userId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+                nr = rs.getLong(1);
+            }
+
+            //stmt.setLong();
+
+            //stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nr;
+    }
+
 }

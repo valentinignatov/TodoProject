@@ -22,4 +22,6 @@ public interface TodoRepository {
     Todo findByTodoId(Long id);
 
     Todo alterTodoById(String newTodo, Long id);
+
+    Long numberOfTodos(Long userId);
 }
